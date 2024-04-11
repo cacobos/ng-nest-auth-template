@@ -1,0 +1,24 @@
+<h1>Login</h1>
+<form [formGroup]="form" (submit)="login()" #f="ngForm">
+    <input
+        type="text"
+        placeholder="Username"
+        autocomplete="off"
+        formControlName="username" />
+    <app-show-error
+        [show]="form.get('username')?.invalid && f.submitted"
+        [errors]="form.get('username')?.errors" />
+
+    <input
+        type="password"
+        placeholder="Password"
+        autocomplete="off"
+        formControlName="password" />
+    <app-show-error
+        [show]="form.get('password')?.invalid && f.submitted"
+        [errors]="form.get('password')?.errors" />
+
+    <button type="submit">Login</button>
+</form>
+<hr />
+<a routerLink="/auth/register">New user? Register</a>

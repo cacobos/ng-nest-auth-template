@@ -1,0 +1,12 @@
+<table>
+    @for (user of users$ | async; track $index) {
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.roles }}</td>
+            <td>
+                <button (click)="editUser(user)">Edit</button>
+                <button (click)="deleteUser(user)">Delete</button>
+            </td>
+        </tr>
+    }
+</table>

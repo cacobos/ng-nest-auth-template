@@ -1,0 +1,23 @@
+@if (show() && errors()) {
+    @if (errors()?.['required']) {
+        <span>This field is required</span>
+    }
+    @if (errors()?.['minlength']) {
+        <span
+            >Minimum length is
+            {{ errors()?.['minlength']['requiredLength'] }}</span
+        >
+    }
+    @if (errors()?.['maxlength']) {
+        <span
+            >Maximum length is
+            {{ errors()?.['maxlength']['requiredLength'] }}</span
+        >
+    }
+    @if (errors()?.['email']) {
+        <span>Invalid email</span>
+    }
+    @if (errors()?.['pattern']) {
+        <span>Invalid pattern</span>
+    }
+}
