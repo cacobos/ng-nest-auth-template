@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ShowErrorComponent } from '@ui/index';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -32,11 +32,12 @@ export class LoginComponent implements OnDestroy {
         if (this.form.invalid) {
             return;
         }
+        const { username, password } = this.form.value;
+        if (!username || !password) {
+            return;
+        }
         this.router.navigate(['/']);
-        this.authService
-            .login('', '')
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe();
+        this.authService.login(username, password);
     }
 
     ngOnDestroy(): void {

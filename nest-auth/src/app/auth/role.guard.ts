@@ -11,7 +11,6 @@ export class RoleGuard implements CanActivate {
       ROLES_KEY,
       [context.getHandler(), context.getClass()],
     );
-    // console.log({ 'required roles🍌🍌': requiredRoles });
     if (!requiredRoles) {
       return true;
     }

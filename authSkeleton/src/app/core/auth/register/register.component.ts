@@ -23,7 +23,7 @@ export class RegisterComponent {
         password: new FormControl<string>('', Validators.required),
     });
 
-    login() {
+    register() {
         if (this.form.invalid) {
             return;
         }

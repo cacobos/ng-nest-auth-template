@@ -1,5 +1,5 @@
 <h1>Register</h1>
-<form [formGroup]="form" (submit)="login()" #f="ngForm">
+<form [formGroup]="form" (submit)="register()" #f="ngForm">
     <input
         type="text"
         placeholder="Username"
@@ -18,7 +18,7 @@
         [show]="form.get('password')?.invalid && f.submitted"
         [errors]="form.get('password')?.errors" />
 
-    <button (click)="login()">Register</button>
+    <button type="submit">Register</button>
 </form>
 <hr />
 <a routerLink="/auth/login">Have a user? Login</a>

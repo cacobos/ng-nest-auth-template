@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment.development';
-import { Observable, catchError, take, tap, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { LoginResponse, User } from './models/user';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class AuthService {
     loggedUser = signal<User | undefined>(undefined);
 
     constructor() {
-        const token = localStorage.getItem('x-token');
+        const token = localStorage.getItem('x-token')?.replace(/"/g, '');
         if (token) {
             this.http
                 .get<LoginResponse>(
@@ -31,10 +31,9 @@ export class AuthService {
                     }
                 )
                 .pipe(
-                    take(1),
                     tap((res) => {
                         this.loggedUser.set(res.user);
-                        localStorage.setItem('x-token', res.token);
+                        localStorage.setItem('x-token', res.accessToken);
                         this.router.navigate(['/']);
                     }),
                     catchError((error) => {
@@ -46,12 +45,12 @@ export class AuthService {
         }
     }
 
-    login(email: string, password: string): Observable<LoginResponse> {
-        return this.http
+    login(username: string, password: string) {
+        this.http
             .post<LoginResponse>(
                 `${this.API_URL}${this.AUTH_PATH}${this.LOGIN_PATH}`,
                 {
-                    email,
+                    username,
                     password,
                 }
             )
@@ -59,14 +58,7 @@ export class AuthService {
                 tap(
                     (res) => {
                         this.loggedUser.set(res.user);
-                        localStorage.setItem(
-                            'x-token',
-                            JSON.stringify(res.token)
-                        );
-                        console.log('User logged in', {
-                            user: res.user,
-                            token: res.token,
-                        });
+                        localStorage.setItem('x-token', res.accessToken);
                         this.router.navigate(['/']);
                     },
                     (error) => {
@@ -75,7 +67,8 @@ export class AuthService {
                         throw error;
                     }
                 )
-            );
+            )
+            .subscribe();
     }
 
     logout() {
@@ -83,7 +76,6 @@ export class AuthService {
     }
 
     getUsers() {
-        console.log(this.API_URL);
         return this.http.get<User[]>(`${this.API_URL}/users`);
     }
 }

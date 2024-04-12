@@ -35,7 +35,6 @@ export class AuthController {
 
   @Get('refresh')
   async refresh(@Request() req) {
-    // recieve old token from headers and send new token
     const oldToken = req.headers['x-token'];
     const user = await this.jwtService.verifyAsync(oldToken);
     const payload = {
