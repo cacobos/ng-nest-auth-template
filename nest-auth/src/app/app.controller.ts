@@ -1,10 +1,11 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
+import { resolve } from 'path';
 import { Public } from './utils/public-decorator';
 @Controller()
 export class AppController {
   @Get()
   @Public()
-  getIndex() {
-    return 'hello';
+  sendApplication(@Res() res) {
+    res.sendFile(resolve('client/index.html'));
   }
 }
