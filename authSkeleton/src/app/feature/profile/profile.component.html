@@ -1,0 +1,33 @@
+<p>profile works!</p>
+@if (user()) {
+    <div class="profile-container">
+        <h2>Bienvenido, {{ user()!.username }}</h2>
+        <div class="change-password">
+            <h3>Cambiar contraseña</h3>
+            <form (submit)="changePassword()" [formGroup]="form">
+                <label for="old-password">Contraseña actual:</label>
+                <input
+                    type="password"
+                    id="old-password"
+                    formControlName="oldPassword"
+                    name="oldPassword" />
+
+                <label for="new-password">Nueva contraseña:</label>
+                <input
+                    type="password"
+                    id="new-password"
+                    formControlName="newPassword"
+                    name="newPassword" />
+
+                <label for="repeat-password">Repetir nueva contraseña:</label>
+                <input
+                    type="password"
+                    id="repeat-password"
+                    formControlName="repeatPassword"
+                    name="repeatPassword" />
+
+                <button type="submit">Cambiar contraseña</button>
+            </form>
+        </div>
+    </div>
+}

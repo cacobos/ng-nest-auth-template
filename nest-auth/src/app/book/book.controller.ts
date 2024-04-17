@@ -3,24 +3,20 @@ import {
   Controller,
   Delete,
   Get,
-  HttpStatus,
   NotFoundException,
   Param,
   Post,
   Put,
   Query,
-  Res,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { BookDto } from './book.model';
-import { BookService } from './book.service';
-import { Book } from './book.schema';
 import { ROLES } from '../utils/role-decorator';
-import { Public } from '../utils/public-decorator';
 import { BookQueryParams } from './book-query-params';
-import { Response } from 'express';
 import { BookResponse } from './book-response.model';
+import { BookDto } from './book.model';
+import { Book } from './book.schema';
+import { BookService } from './book.service';
 
 @Controller('api/books')
 export class BookController {

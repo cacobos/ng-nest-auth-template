@@ -4,9 +4,10 @@
             <td>{{ user.username }}</td>
             <td>{{ user.roles }}</td>
             <td>
-                <button (click)="editUser(user)">Edit</button>
+                <button (click)="resetPassword(user)">Reset Password</button>
                 <button (click)="deleteUser(user)">Delete</button>
             </td>
         </tr>
     }
 </table>
+<app-create-user (userCreated)="onUserCreated()" />

@@ -25,8 +25,11 @@ export class AuthService {
       username: user.username,
       roles: user.roles,
     };
+    const accessToken = await this.jwtService.signAsync(payload, {
+      expiresIn: '1h',
+    });
     return {
-      accessToken: await this.jwtService.signAsync(payload),
+      accessToken: `Bearer ${accessToken}`,
       user: {
         username: user.username,
         roles: user.roles,

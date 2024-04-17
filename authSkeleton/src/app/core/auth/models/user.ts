@@ -17,3 +17,15 @@ export interface LoginResponse {
     accessToken: string;
     user: User;
 }
+
+export interface ChangePasswordData {
+    username: string;
+    oldPassword: string;
+    newPassword: string;
+}
+
+// ROLES
+export const ROLES = {
+    ADMIN: 'ROLE_ADMIN',
+    USER: 'ROLE_USER',
+};

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '@core/common/auth.guard';
 
 export const routes: Routes = [
     {
@@ -16,11 +17,23 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'profile',
+                loadComponent: () =>
+                    import('@feature/profile/profile.component').then(
+                        (m) => m.ProfileComponent
+                    ),
+            },
+            {
                 path: 'admin',
                 loadComponent: () =>
-                    import('../../feature/admin/admin.component').then(
+                    import('@feature/admin/admin.component').then(
                         (m) => m.AdminComponent
                     ),
+                // only for admin
+                canActivate: [authGuard],
+                data: {
+                    roles: ['ROLE_ADMIN'],
+                },
                 children: [
                     {
                         path: '',
