@@ -1,5 +1,9 @@
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ENVIRONMENT_INITIALIZER } from '@angular/core';
+import {
+    HttpClient,
+    provideHttpClient,
+    withInterceptors,
+} from '@angular/common/http';
+import { ENVIRONMENT_INITIALIZER, importProvidersFrom } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
     Routes,
@@ -9,10 +13,16 @@ import {
     withInMemoryScrolling,
     withRouterConfig,
 } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { authInterceptor } from './common/auth.interceptor';
 
 export interface CoreOptions {
     routes: Routes;
+}
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+    return new TranslateHttpLoader(httpClient);
 }
 
 export function provideCore({ routes }: CoreOptions) {
@@ -31,6 +41,16 @@ export function provideCore({ routes }: CoreOptions) {
             })
         ),
         provideHttpClient(withInterceptors([authInterceptor])),
+
+        importProvidersFrom(
+            TranslateModule.forRoot({
+                loader: {
+                    provide: TranslateLoader,
+                    useFactory: HttpLoaderFactory,
+                    deps: [HttpClient],
+                },
+            })
+        ),
 
         // other 3rd party libraries providers like NgRx, provideStore()
 
