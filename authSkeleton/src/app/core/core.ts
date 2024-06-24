@@ -1,8 +1,4 @@
-import {
-    HttpClient,
-    provideHttpClient,
-    withInterceptors,
-} from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ENVIRONMENT_INITIALIZER, importProvidersFrom } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
